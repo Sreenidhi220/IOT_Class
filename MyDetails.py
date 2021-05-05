@@ -1,6 +1,6 @@
 import pymysql
 
-conn =pymysql.connect(database="ab1",user="Sreenidhi",password="12345",host="localhost")
+conn =pymysql.connect(database="db1",user="Sreenidhi",password="12345",host="localhost")
 cur=conn.cursor()
 
 #create database
