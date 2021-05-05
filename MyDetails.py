@@ -4,7 +4,7 @@ conn =pymysql.connect(database="db1",user="Sreenidhi",password="12345",host="loc
 cur=conn.cursor()
 
 #create database
-cur.execute("CREATE TABLE users(id int primary, name text, age int, gender text, address text);")
+cur.execute("CREATE TABLE users(id int primary, name varchar, age int, gender varchar, address varchar);")
 
 #to store user data
 
