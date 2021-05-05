@@ -8,8 +8,8 @@ cur.execute("CREATE TABLE users(id int primary, name text, age int, gender text,
 
 #to store user data
 
-name = "user1"
-age = 25
+name = "Sreenidhi"
+age = 28
 gender = "M"
 address = "KERALA"
 
@@ -30,3 +30,5 @@ data2=cur.fetchall()
 
 print(data1)
 print(data2)
+
+
