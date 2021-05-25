@@ -42,7 +42,7 @@ def todb():
  weatherReport = currentWeather['weather'][0]
  
  #Connect to MySQL DB (Not tested, May have errors!)
- conn = pymysql.connect(database="WeatherDB",user="admin",password="admin",host="localhost")
+ conn = pymysql.connect(database="db1",user="Sreenidhi",password="12345",host="localhost")
  cur=conn.cursor()
  
  #Table 1 shows realtime weather
