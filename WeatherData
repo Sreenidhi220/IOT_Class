@@ -58,8 +58,7 @@ def todb():
   print(f"description: {description}")
   print(f"icon: {icon}")
   print(f"main: {main}") 
-  
-              
+                
 else:
    # showing the error message
    print("Error in the HTTP request")
