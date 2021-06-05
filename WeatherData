@@ -63,7 +63,8 @@ def todb():
 else:
    # showing the error message
    print("Error in the HTTP request")
- #Connect to MySQL DB (Not tested, May have errors!)
+   
+ #Configuring Connection to MYsql
  conn = pymysql.connect(database="db1",user="Sreenidhi",password="12345",host="localhost")
  cur=conn.cursor()
  
