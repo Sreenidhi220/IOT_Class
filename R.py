@@ -3,7 +3,6 @@ from flask import Flask
 import pymysql
 import requests,json
 
-
 #Insert your OpenWeatherMap API here
 OPEN_WEATHER_MAP_API_KEY = "6af4850b023c45779378a90786aef6d1"
 
