@@ -1,13 +1,7 @@
-#NOTE: This program works for python2 & python3
-#Suppose if there is any error, especially with urllib (uncomment), try running with python2
-#You must have created your DB before executing this program
 
 from flask import Flask
 import pymysql
-
-
-#For Python3 only
-import requests
+import requests,json
 
 
 #Read OpenWeatherMap API usage here - https://openweathermap.org/api/one-call-api
@@ -16,8 +10,8 @@ import requests
 OPEN_WEATHER_MAP_API_KEY = "6af4850b023c45779378a90786aef6d1"
 
 #give your Lattitude and Longitude
-lat = '8.01'
-lon = '77.05'
+lat = '9.49'
+lon = '76.3264'
 
 #Create openweathermap url
 api_url = "https://api.openweathermap.org/data/2.5/onecall?lat="+str(lat)+"&lon="+str(lon)+"&exclude=hourly,daily,minutely,alerts+&appid="+OPEN_WEATHER_MAP_API_KEY+"&units=metric"
@@ -25,9 +19,7 @@ api_url = "https://api.openweathermap.org/data/2.5/onecall?lat="+str(lat)+"&lon=
 app = Flask(__name__)
 @app.route('/fetchWeather')
 def get_open_weather_map_data():
-  
- 
-  #For Python3
+
   response = requests.get(api_url).json()
   
   print(response)
@@ -38,22 +30,51 @@ def get_open_weather_map_data():
 def todb():
  
  #receiving data from OpenWeatherMap
- response = requests.get(api_url).json()
- 
- #Cleaning the data to make it look tidy
- currentWeather = response['current']
- weatherReport = currentWeather['weather'][0]
- 
+ response = requests.get(api_url)
+ if response.status_code == 200:
+  data=response.json()
+  #Cleaning the data to make it look tidy
+  curr = data['current']
+  clouds=curr['clouds']
+  dew_point=curr['dew_point']
+  dt=curr['dt']
+  feels_like=curr['feels_like']
+  humidity=curr['humidity']
+  temp=curr['temp']
+
+  report = curr['weather'][0]
+  id=report['id'] 
+  description=report['description']
+  icon=report['icon'] 
+  main=report['main'] 
+  print("Current Weather:")
+  print(f"clouds: {clouds}")
+  print(f"dew_point: {dew_point}")
+  print(f"dt: {dt}")
+  print(f"feels_Like: {feels_like}") 
+  print(f"Humidity: {humidity}")
+  print(f"Temperature: {temperature}")
+  print("Weather Report")
+  print(report)
+  print(f"id: {id}")
+  print(f"description: {description}")
+  print(f"icon: {icon}")
+  print(f"main: {main}") 
+  
+              
+else:
+   # showing the error message
+   print("Error in the HTTP request")
  #Connect to MySQL DB (Not tested, May have errors!)
  conn = pymysql.connect(database="db1",user="Sreenidhi",password="12345",host="localhost")
  cur=conn.cursor()
  
  #Table 1 shows realtime weather
- cur.execute("INSERT INTO currentWeatherTable (clouds, dew_point, dt, feels_like, humidity, temp ) VALUES (%(clouds)s, %(dew_point)s, %(dt)s, %(feels_like)s, %(humidity)s, %(temp)s )",currentWeather)
+ cur.execute("INSERT INTO currentWeatherTable VALUES (%s, %s, %s, %s, %s, %s)",(clouds,dew_point,dt,feels_like,humidity,temp))
  
  #Table 2 shows summary
- cur.execute("INSERT INTO weatherSummaryTable (id, description, icon, main) VALUES (%(id)s, %(description)s, %(icon)s, %(main)s)",weatherReport)
- return currentWeather
+ cur.execute("INSERT INTO weatherSummaryTable VALUES (%s, %s, %s, %s)",(id,description,icon,main))
+ return curr
 
 if __name__ == "__main__":
   #Application runs on port 3000
