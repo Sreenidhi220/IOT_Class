@@ -51,7 +51,7 @@ def todb():
   print(f"dt: {dt}")
   print(f"feels_Like: {feels_like}") 
   print(f"Humidity: {humidity}")
-  print(f"Temperature: {temperature}")
+  print(f"Temperature: {temp}")
   print("Weather Report")
   print(report)
   print(f"id: {id}")
