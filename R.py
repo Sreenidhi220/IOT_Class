@@ -71,7 +71,7 @@ def todb():
  
  #Table 2 shows summary
  cur.execute("INSERT INTO weatherSummaryTable VALUES (%s, %s, %s, %s)",(id,description,icon,main))
- return curr
+ return "Success"
 
 if __name__ == "__main__":
   #Application runs on port 3000
